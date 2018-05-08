@@ -432,4 +432,3 @@ C:\Users\rsumalde\Documents\Visual Studio 2017\Projects\PrototypeWebBlockchainV5
 C:\Users\rsumalde\Documents\Visual Studio 2017\Projects\PrototypeWebBlockchainV5\PrototypeWebBlockchain\obj\Debug\PrototypeWebBlockchain.csproj.CopyComplete
 C:\Users\rsumalde\Documents\Visual Studio 2017\Projects\PrototypeWebBlockchainV5\PrototypeWebBlockchain\obj\Debug\PrototypeWebBlockchain.dll
 C:\Users\rsumalde\Documents\Visual Studio 2017\Projects\PrototypeWebBlockchainV5\PrototypeWebBlockchain\obj\Debug\PrototypeWebBlockchain.pdb
-C:\Users\rsumalde\Documents\Visual Studio 2017\Projects\PrototypeWebBlockchainV5\PrototypeWebBlockchain\obj\Debug\PrototypeWebBlockchain.csprojResolveAssemblyReference.cache

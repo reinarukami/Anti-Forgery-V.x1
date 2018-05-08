@@ -48,7 +48,7 @@ namespace PrototypeWebBlockchain.Repository
             }
         }
 
-        public IEnumerable<int> nextid()
+        public IEnumerable<int> NextID()
         {
             using (IDbConnection dbConnection = Connection)
             {

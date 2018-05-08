@@ -10,13 +10,13 @@ namespace PrototypeWebBlockchain.Models
     [FunctionOutput]
     public class FileDTO
     {
-        [Parameter("uint256", 1)]
+        [Parameter("uint256", "id", 1)]
         public int id { get; set; }
 
-        [Parameter("string", 2)]
+        [Parameter("string", "filehash", 2)]
         public string filehash { get; set; }
 
-        [Parameter("string", 3)]
+        [Parameter("string", "date", 3)]
         public string date { get; set; }
 
     }

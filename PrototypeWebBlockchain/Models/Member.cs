@@ -16,6 +16,8 @@ namespace PrototypeWebBlockchain.Models
         public string w_address { get; set; }
         [Required]
         public string password { get; set; }
+        [Required]
+        public string cpassword { get; set; }
         public string w_password { get; set; }
         [Required]
         public string fname { get; set; }

@@ -19,16 +19,18 @@ namespace PrototypeWebBlockchain.Controllers
     public class TransactionController : Controller
     {
         private readonly TransactionRepository transactionRepository;
-        private readonly FileUpload fileupload;
-       
-        
+        private readonly FileFunction fileupload;
+           
         public TransactionController()
         {
             transactionRepository = new TransactionRepository();
-            fileupload = new FileUpload();
+            fileupload = new FileFunction();
         }
 
-        // GET: Home
+        public ActionResult Transactionlist()
+        {
+            return View();
+        }
 
         public ActionResult UploadFile()
         {
@@ -46,85 +48,18 @@ namespace PrototypeWebBlockchain.Controllers
 
             _file.image = HttpContext.Request.Files[0];
 
-
             if (_file.image != null)
             {
                 fileupload.UploadFile(_file, transactionRepository, Session["ID"].ToString());
             }
 
-            return null;
-        }
-
-
-        public ActionResult Transactionlist()
-        {
-            fileupload.GetFiles();
-
-            return View();
-        }
-
-
-        [HttpPost]
-        public ActionResult AddTransactionToTable(string data)
-        {
-            return null;
+            return RedirectToRoute(new { Controller = "Transaction", Action = "Transactionlist" });
         }
 
         [HttpPost]
         public JsonResult ValidateImages(string data)
         {
-            var _imageFiles = JsonConvert.DeserializeObject<List<ImageJson>>(data);
-            var _imageSaved = transactionRepository.FindByID(Int32.Parse(Session["ID"].ToString()));
-            var transaction = new List<TransactionJson>();
-
-            var nfilepath = ConfigurationManager.AppSettings["FileImagePath"];
-
-            string file;
-
-            foreach (var item in _imageFiles)
-            {
-
-                var image = _imageSaved.Where(r => r.id == item.id).FirstOrDefault();
-
-                try
-                {
-                    file = Path.Combine(nfilepath, image.filename);
-                    string shavalue = fileupload.ConvertSavedFileToSha(file);
-                    if (shavalue == item.filehash)
-                    {
-                        item.filehash = image.filename;
-                        transaction.Add(new TransactionJson()
-                        {
-                            id = item.id,
-                            filename = image.filename,
-                            status = "Status/check.png",
-                            date = item.date
-                        });
-                    }
-                    else
-                    {
-                        transaction.Add(new TransactionJson()
-                        {
-                            id = item.id,
-                            filename = image.filename,
-                            status = "Status/cross.png",
-                            date = item.date
-                        });
-
-                    }
-                }
-
-                catch
-                {
-                    transaction.Add(new TransactionJson()
-                    {
-                        id = item.id,
-                        filename = image.filename,
-                        status = "Status/cross.png",
-                        date = item.date
-                    });
-                }
-            }
+            var transaction = fileupload.GetValidatedFiles(transactionRepository);
 
             return new JsonResult() { Data = new { JTransaction = transaction } };
         }

@@ -34,8 +34,15 @@ namespace PrototypeWebBlockchain.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = memberFunction.CreateAccount(member);
-                memberRepository.Add(result); 
+                var validationresult = memberFunction.Validate(member, memberRepository);
+                if(validationresult.Count != 0)
+                {
+                    ModelState.Merge(validationresult);
+                    return View(member);
+                }
+
+                var MemberWithHash = memberFunction.CreateAccount(member);
+                memberRepository.Add(MemberWithHash); 
                 return RedirectToAction("Login");
             }
             return View(member);

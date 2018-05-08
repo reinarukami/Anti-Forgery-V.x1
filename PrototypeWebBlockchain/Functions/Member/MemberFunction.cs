@@ -10,6 +10,7 @@ using System;
 using System.Web;
 using System.Text;
 using PrototypeWebBlockchain.Functions.Default;
+using System.Web.Mvc;
 
 namespace PrototypeWebBlockchain.Repository
 {
@@ -25,6 +26,27 @@ namespace PrototypeWebBlockchain.Repository
             member.w_address = taskCreateAccount.Result;
 
             return member;
+        }
+
+        public ModelStateDictionary Validate(Member _member, MemberRepository _memberRepository)
+        {
+            var memberlist = _memberRepository.FindAll();
+            var modelstate = new ModelStateDictionary();
+
+            var count = memberlist.Where(r => r.email == _member.email).LongCount();
+            if(count != 0)
+            {
+                 modelstate.AddModelError("email", "Email is Duplicated");
+            }
+
+            if(_member.password != _member.cpassword)
+            {
+                modelstate.AddModelError("password", "Password did not match");
+                modelstate.AddModelError("cpassword", "Password did not match");
+            }
+
+            return modelstate;
+
         }
     }
 }
