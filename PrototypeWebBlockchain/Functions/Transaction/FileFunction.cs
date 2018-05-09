@@ -128,22 +128,30 @@ namespace PrototypeWebBlockchain.Repository
             {
                 var filedata = dataresult.Where(r => r.id == item.id).FirstOrDefault();
 
-                try
+                if(filedata == null)
                 {
-                    string file = Path.Combine(filepath, filedata.filename);
-                    string shavalue = ConvertSavedFileToSha(file);
-                    if(shavalue == item.filehash)
-                    {
-                        transaction.Add(SetTransaction(item.id, filedata.filename, "Status/check.png", item.date));
-                    }
-                    else
-                    {
-                        transaction.Add(SetTransaction(item.id, filedata.filename, "Status/cross.png", item.date));
-                    }
+                    transaction.Add(SetTransaction(item.id, item.filehash + "(File was Deleted or Updated in the database)", "Status/cross.png", item.date));
                 }
-                catch
-                {
-                    transaction.Add(SetTransaction(item.id, item.filehash, "Status/cross.png", item.date));
+
+                else
+                { 
+                    try
+                    {
+                        string file = Path.Combine(filepath, filedata.filename);
+                        string shavalue = ConvertSavedFileToSha(file);
+                        if(shavalue == item.filehash)
+                        {
+                            transaction.Add(SetTransaction(item.id, filedata.filename, "Status/check.png", item.date));
+                        }
+                        else
+                        {
+                            transaction.Add(SetTransaction(item.id, filedata.filename + "(File was Tampered)", "Status/cross.png", item.date));
+                        }
+                    }
+                    catch
+                    {
+                        transaction.Add(SetTransaction(item.id, item.filehash + "(File was Deleted )", "Status/cross.png", item.date));
+                    }
                 }
             }
 

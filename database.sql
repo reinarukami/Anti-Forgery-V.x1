@@ -1,47 +1,3 @@
--- Table: public.member_t
-
--- DROP TABLE public.member_t;
-
-CREATE TABLE public.member_t
-(
-    id integer NOT NULL DEFAULT nextval('member_t_id_seq'::regclass),
-    email character varying(50) COLLATE pg_catalog."default",
-    password character varying(50) COLLATE pg_catalog."default",
-    fname character varying(50) COLLATE pg_catalog."default",
-    lname character varying(50) COLLATE pg_catalog."default",
-    age integer,
-    contact character varying(50) COLLATE pg_catalog."default",
-    address character varying(250) COLLATE pg_catalog."default",
-    active integer NOT NULL DEFAULT 1
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE public.member_t
-    OWNER to postgres;
-
--- Table: public.transaction_t
-
--- DROP TABLE public.transaction_t;
-
-CREATE TABLE public.transaction_t
-(
-    id numeric(10,0) NOT NULL,
-    member_id integer,
-    filename character varying(200) COLLATE pg_catalog."default",
-    filepath character varying(200) COLLATE pg_catalog."default",
-    date character varying(20) COLLATE pg_catalog."default"
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE public.transaction_t
-    OWNER to postgres;
-
 CREATE SEQUENCE public.member_t_id_seq
     INCREMENT 1
     START 2010211002
@@ -61,3 +17,42 @@ CREATE SEQUENCE public.transaction_t_id_seq
 
 ALTER SEQUENCE public.transaction_t_id_seq
     OWNER TO postgres;
+
+CREATE TABLE public.member_t
+(
+    id integer NOT NULL DEFAULT nextval('member_t_id_seq'::regclass),
+    email character varying(50) COLLATE pg_catalog."default",
+    w_address character varying(50) COLLATE pg_catalog."default",
+    password character varying(50) COLLATE pg_catalog."default",
+    w_password character varying(50) COLLATE pg_catalog."default",
+    fname character varying(50) COLLATE pg_catalog."default",
+    lname character varying(50) COLLATE pg_catalog."default",
+    age integer,
+    contact character varying(50) COLLATE pg_catalog."default",
+    address character varying(250) COLLATE pg_catalog."default",
+    active integer NOT NULL DEFAULT 1
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.member_t
+    OWNER to postgres;
+
+CREATE TABLE public.transaction_t
+(
+    id numeric(10,0) NOT NULL,
+    member_id integer,
+    filename character varying(200) COLLATE pg_catalog."default",
+    filepath character varying(200) COLLATE pg_catalog."default",
+    date character varying(50) COLLATE pg_catalog."default"
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.transaction_t
+    OWNER to postgres;
+
